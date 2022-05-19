@@ -5,6 +5,7 @@ from dash import dcc, html, Input, Output, dash_table, dash
 import numpy as np
 
 app = dash.Dash(__name__)
+server = app.server
 app.title = "Karte Humboldt"
 
 # -- Daten importieren
