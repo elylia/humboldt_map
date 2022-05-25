@@ -214,7 +214,6 @@ def update_data(original_figure, sprache, jahr, clickData):
             margin=dict(l=0, r=0, t=50, b=50),
             font=dict(size=10),
             font_family="sans-serif"
-
         )
         # Hier kümmern wir uns darum, dass die Karte an genau der Stelle bleibt, an der sie war, bevor ein click-Event passiert ist. Ansonsten springt die Karte zurück in den Ausgangsmodus, wenn irgendwo auf die Karte gklickt wird. Das wollen wir natürlich vermeiden
         if 'layout' in original_figure:
@@ -249,6 +248,6 @@ def update_data(original_figure, sprache, jahr, clickData):
     return [fig, fig2, fig3, dff_tabelle.to_dict("records")]
 
 
-# -- Und jetzt starten wir unsere App!
+# -- Und jetzt starten wir unsere App! :)
 if __name__ == '__main__':
     app.run_server(debug=True)
