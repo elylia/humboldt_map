@@ -49,7 +49,7 @@ tab1_content = dbc.Card(
     ]),
     dbc.Row([
         dbc.Col([html.Div(
-            dcc.Graph(id="world_map", figure={}), id="map-Container"),
+            dcc.Graph(id="world_map", figure={}, config = {'modeBarButtonsToRemove': ["pan2d", "zoomInGeo", "zoomOutGeo", "select2d", "lasso2d"]}), id="map-Container", ),
             dcc.RangeSlider(1789, 1859, 1,
                             value=[1789, 1799],
                             marks=None,
@@ -87,10 +87,10 @@ tab1_content = dbc.Card(
     html.Div(
     dbc.Row([
         dbc.Col(
-            dcc.Graph(id="bar_plot"),
+            dcc.Graph(id="bar_plot", config = {'modeBarButtonsToRemove': ["pan2d", "zoom2d", "zoomIn2d", "zoomOut2d", "select2d", "lasso2d", "autoScale2d", "resetScale2d"]}),
         width=12, lg=8),
         dbc.Col(
-            dcc.Graph(id="pie_plot")
+            dcc.Graph(id="pie_plot", config = {'modeBarButtonsToRemove': ["pan2d", "zoomIn2d", "zoomOut2d", "select2d", "lasso2d"]})
         ,width=12, lg=4)
     ]), id="UnteresDiv")
 
@@ -197,7 +197,8 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
     fig2.update_traces(width=1)
     fig2.update_layout(
         xaxis=dict(
-            tickfont=dict(size=9)))
+            tickfont=dict(size=9)),
+    dragmode=False )
     dff_pie = dff2
     dff_pie = dff_pie.groupby(["Erscheinungsort"])['Anzahl Publikationen'].sum().reset_index(
         name='Anzahl Publikationen')
