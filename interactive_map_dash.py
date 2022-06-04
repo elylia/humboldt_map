@@ -26,7 +26,7 @@ tab1_content = dbc.Card(
     dbc.CardBody([
 
     dbc.Row([
-        dbc.Col([
+        dbc.Col(html.Div([
             dcc.Dropdown(id="auswahl_sprache",
                          options=[{"label": "Alle Sprachen", "value": "Alle"}] + [{"label": x, "value": x} for x in
                                                                                   sprachen],
@@ -45,7 +45,7 @@ tab1_content = dbc.Card(
                              className="Dropdown"
                              ),
 
-            ], width=12, lg=12),
+            ], style={"width": "50%"}), width=12, lg=12),
     ]),
     dbc.Row([
         dbc.Col([html.Div(
