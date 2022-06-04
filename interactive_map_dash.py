@@ -4,7 +4,8 @@ import plotly.express as px
 from dash import dcc, html, Input, Output, dash_table, dash
 import numpy as np
 import dash_bootstrap_components as dbc
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.COSMO], meta_tags=[
+app = dash.Dash(__name__)
+app = dash.Dash(external_stylesheets=[dbc.themes.COSMO], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"}
     ])
 app.title = "Karte Humboldt"
