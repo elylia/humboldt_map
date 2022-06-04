@@ -212,19 +212,22 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
     fig3.update_traces(customdata=np.stack((dff_pie["Erscheinungsort"], dff_pie["Anzahl Publikationen"]), axis=-1))
     fig3.update_traces(hovertemplate='<b>%{customdata[0][0]}</b><br>Anzahl: %{customdata[0][1]}<br>%{percent}')
     fig3.update_layout(showlegend=False)
+    dff_animated = dff_animated.sort_values("Jahr")
 
     fig4 = px.scatter_geo(
         dff_animated, lat="lat", lon="lng", hover_name="Erscheinungsort",
-        hover_data={"Erscheinungsort": False, "Anzahl Publikationen": True, "Jahr": True, "lat": False,
+        hover_data={"Erscheinungsort": False, "Anzahl Publikationen": False, "Jahr": False, "lat": False,
                     "lng": False},
-        size="Anzahl Publikationen", animation_frame="Jahr",
-        projection="natural earth",
-        title="Karte Erscheinungsorte und Erscheinungsjahre"
+        size="Anzahl Publikationen", animation_frame="Jahr", color="Anzahl Publikationen",
+        projection="natural earth", opacity=0.9,
+        title="Karte Erscheinungsorte und Erscheinungsjahre",  color_continuous_scale=px.colors.sequential.Redor
     )
-    fig4.update_traces(customdata=np.stack((dff["Erscheinungsort"], dff["Anzahl Publikationen"]), axis=-1))
-    fig4.update_traces(hovertemplate = '<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
-    for f in fig4.frames:
-        f.data[0].update(hovertemplate='<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
+    fig4.update_traces(marker_sizemin=4, )
+
+    #fig4.update_traces(customdata=np.stack((dff["Erscheinungsort"], dff["Anzahl Publikationen"]), axis=-1))
+    #fig4.update_traces(hovertemplate = '<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
+    #for f in fig4.frames:
+     #   f.data[0].update(hovertemplate='<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
 
     dff_tabelle = dff_tabelle.sort_values("Jahr")
     return [fig, fig2, fig3, fig4, dff_tabelle.to_dict("records")]
