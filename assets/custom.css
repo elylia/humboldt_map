@@ -17,7 +17,7 @@ h2{
 }
 
 .DivTable{
-   flex: 1;
+   flex: 5;
    padding-left:15px;
    padding-right:30px;
    padding-bottom:30px;
@@ -25,11 +25,18 @@ h2{
 }
 
 .DivKarte{
-   flex: 2;
+   flex: 9;
+   max-width: 100%;
    padding-left:30px;
    padding-right:15px;
    padding-bottom:30px;
    padding-top:30px;
+       display: flex;
+    flex-direction: column;
+}
+
+#world_map {
+flex: 1;
 }
 
 .Slider{
@@ -43,19 +50,15 @@ h2{
     font-size: 12px
 }
 
-.OberesDiv{
-    max-width: 100%;
-    max-height: 100%;
-    display: flex;
-    font-size: 10px;
+'''#Umrandung{
+ '''   padding:50px;
+'''}
+#UnteresDiv{
+    padding:50px;
 }
 
-.UnteresDiv{
-    max-width: 100%;
-    max-height: 100%;
-    display: flex;
-    font-size: 10px;
-}
+
+
 
 .DivBar{
     flex: 2;
@@ -75,3 +78,7 @@ h2{
     padding-left: 0px;
     padding-top: 30px;
     padding-bottom: 30px;}
+
+.modebar{
+      display: none !important;
+}
