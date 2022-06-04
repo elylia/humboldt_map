@@ -9,6 +9,8 @@ app = dash.Dash(external_stylesheets=[dbc.themes.COSMO], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"}
     ])
 app.title = "Karte Humboldt"
+server = app.server
+
 
 # -- Daten importieren
 df = pd.read_csv("Humbold_Metadaten_lat_lng_ohne_manuell.csv", sep=",")
