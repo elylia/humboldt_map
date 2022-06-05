@@ -226,7 +226,13 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
         title="Karte Erscheinungsorte und Erscheinungsjahre",  color_continuous_scale=px.colors.sequential.Redor
     )
     fig4.update_traces(marker_sizemin=4, )
+    fig4.layout.coloraxis.colorbar.title = 'Publikationen'
+    fig4.update_layout(
+        margin=dict(l=0, r=0, t=50, b=50),
+        font=dict(size=10),
+        font_family="sans-serif"
 
+    )
     #fig4.update_traces(customdata=np.stack((dff["Erscheinungsort"], dff["Anzahl Publikationen"]), axis=-1))
     #fig4.update_traces(hovertemplate = '<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
     #for f in fig4.frames:
