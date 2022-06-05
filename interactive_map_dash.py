@@ -98,8 +98,11 @@ tab1_content = dbc.Card(
 
 tab2_content = dbc.Card(
     dbc.CardBody(
-
-        dcc.Graph(id="animierte_karte", style={'width': '100%', 'height': '90vh'})
+        dbc.Row(
+            dbc.Col(
+                dcc.Graph(id="animierte_karte", style={'height': '90vh'} )
+            ,width=12, lg=12)
+        )
     ))
 
 app.layout = dbc.Tabs(
