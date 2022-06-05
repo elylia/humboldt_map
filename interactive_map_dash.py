@@ -100,7 +100,7 @@ tab2_content = dbc.Card(
     dbc.CardBody(
         dbc.Row(
             dbc.Col(
-                dcc.Graph(id="animierte_karte", style={'height': '90vh'} )
+                dcc.Graph(id="animierte_karte", style={'height': '90vh'}, config = {'modeBarButtonsToRemove': ["pan2d", "zoomInGeo", "zoomOutGeo", "select2d", "lasso2d"]} )
             ,width=12, lg=12)
         )
     ))
