@@ -107,14 +107,12 @@ tab2_content = dbc.Card(
         )
     ))
 
-app.layout = \
-    dcc.Loading(id="loading",
-                children=[dbc.Tabs(
+app.layout = dbc.Tabs(
     [
         dbc.Tab(tab1_content, label="Dashboard"),
         dbc.Tab(tab2_content, label="Animierte Karte"),
     ]
-)])
+)
 
 # -- Karte mit Dash verknüpfen
 @app.callback(
