@@ -4,6 +4,7 @@ import plotly.express as px
 from dash import dcc, html, Input, Output, dash_table, dash
 import numpy as np
 import dash_bootstrap_components as dbc
+
 app = dash.Dash(__name__)
 app = dash.Dash(external_stylesheets=[dbc.themes.COSMO], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"}
@@ -23,6 +24,7 @@ orte = df["Erscheinungsort"].sort_values().unique()
 # -- App Layout
 
 tab1_content = dbc.Card(
+
     dbc.CardBody([
 
     dbc.Row([
@@ -105,12 +107,14 @@ tab2_content = dbc.Card(
         )
     ))
 
-app.layout = dbc.Tabs(
+app.layout = \
+    dcc.Loading(id="loading",
+                children=[dbc.Tabs(
     [
         dbc.Tab(tab1_content, label="Dashboard"),
         dbc.Tab(tab2_content, label="Animierte Karte"),
     ]
-)
+)])
 
 # -- Karte mit Dash verknüpfen
 @app.callback(
