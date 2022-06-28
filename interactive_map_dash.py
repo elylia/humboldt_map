@@ -38,7 +38,7 @@ tab1_content = dbc.Card(
                          value="Alle",
                          className="Dropdown",
                         placeholder="Sprache auswählen",
-                         style={"backgroundColor": "#FFE8CE"},
+                         style={"backgroundColor": "#FFF2E2"},
 
                          ),
 
@@ -50,7 +50,7 @@ tab1_content = dbc.Card(
                              value="Alle",
                              className="Dropdown",
                             placeholder="Ort auswählen",
-                            style={"backgroundColor": "#FFE8CE"},
+                            style={"backgroundColor": "#FFF2E2"},
                              ),
 
             ], style={"width": "50%"}), width=12, lg=12),
@@ -233,7 +233,7 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
                     "lng": False},
         size="Anzahl Publikationen", animation_frame="Jahr", color="Anzahl Publikationen", range_color=(0,40),
         projection="natural earth", opacity=0.9,
-        title="Karte Erscheinungsorte und Erscheinungsjahre",  color_continuous_scale=px.colors.sequential.Redor_r
+        color_continuous_scale=px.colors.sequential.Redor_r
     )
     fig4.update_traces(marker_sizemin=4, )
     fig4.layout.coloraxis.colorbar.title = 'Publikationen'
