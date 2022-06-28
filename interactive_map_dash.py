@@ -1,11 +1,13 @@
-# Erstmal alle wichtigen Sachen importieren :)
 import pandas as pd
 import plotly.express as px
 from dash import dcc, html, Input, Output, dash_table, dash
 import numpy as np
+# Auf dieser Bibliothek basieren die wesentlichen Neuerungen im Vergleich zur letzten Version. Mit Bootstrap haben wir die Seite Responsive gemacht und man kann sie jetzt auch gut auf Handys angucken. Außerdem haben wir auch die Tabs mit Bootstrap umgesetzt
 import dash_bootstrap_components as dbc
 
 app = dash.Dash(__name__)
+# Hier definieren wir unser Bootstrap-Stylesheet, das dann für die gesamte Seite gilt.
+
 app = dash.Dash(external_stylesheets=[dbc.themes.COSMO], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"}
     ])
@@ -22,7 +24,6 @@ jahre = df["Jahr"].sort_values().unique()
 orte = df["Erscheinungsort"].sort_values().unique()
 
 # -- App Layout
-
 tab1_content = dbc.Card(
 
     dbc.CardBody([
@@ -35,7 +36,10 @@ tab1_content = dbc.Card(
                          multi=True,
                          clearable=False,
                          value="Alle",
-                         className="Dropdown"
+                         className="Dropdown",
+                        placeholder="Sprache auswählen",
+                         style={"backgroundColor": "#FFE8CE"},
+
                          ),
 
                 dcc.Dropdown(id="auswahl_ort",
@@ -44,7 +48,9 @@ tab1_content = dbc.Card(
                              multi=True,
                              clearable=False,
                              value="Alle",
-                             className="Dropdown"
+                             className="Dropdown",
+                            placeholder="Ort auswählen",
+                            style={"backgroundColor": "#FFE8CE"},
                              ),
 
             ], style={"width": "50%"}), width=12, lg=12),
@@ -85,7 +91,9 @@ tab1_content = dbc.Card(
                 export_format="csv",
                 style_table={'max-height': '70vh', "width": "100%", 'overflowX': 'auto'}),
         width=12, lg=4, align="start")
+
     ]),
+
     html.Div(
     dbc.Row([
         dbc.Col(
@@ -109,8 +117,8 @@ tab2_content = dbc.Card(
 
 app.layout = dbc.Tabs(
     [
-        dbc.Tab(tab1_content, label="Dashboard"),
-        dbc.Tab(tab2_content, label="Animierte Karte"),
+        dbc.Tab(tab1_content, label="Statistische Daten"),
+        dbc.Tab(tab2_content, label="Datenvisualisierung"),
     ]
 )
 
@@ -176,7 +184,7 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
         fig = px.scatter_geo(
             dff, lat="lat", lon="lng", projection="natural earth", opacity=0.9, size_max=15,
             hover_data={"lat": False, "lng": False, "Erscheinungsort": True}, size="Anzahl Publikationen",
-            color="Anzahl Publikationen", color_continuous_scale=px.colors.sequential.Redor)
+            color="Anzahl Publikationen", color_continuous_scale=px.colors.sequential.Redor_r)
         fig.update_traces(customdata=np.stack((dff["Erscheinungsort"], dff["Anzahl Publikationen"]), axis=-1))
 
         fig.update_traces(hovertemplate='<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
@@ -195,7 +203,7 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
 
     dff_bar = dff_tabelle.groupby(["Erscheinungsort", "lat", "lng", "Jahr"]).size().reset_index(name='Anzahl Publikationen')
     dff_bar = dff_bar.groupby(["Jahr"])['Anzahl Publikationen'].sum().reset_index(name='Anzahl Publikationen')
-    fig2 = px.bar(dff_bar, x="Jahr", y="Anzahl Publikationen", color_discrete_sequence=px.colors.qualitative.Pastel)
+    fig2 = px.bar(dff_bar, x="Jahr", y="Anzahl Publikationen", color_discrete_sequence=["#a3b4b5"], title="Publikationen im Zeitverlauf")
     fig2.update_traces(customdata=np.stack((dff_bar["Anzahl Publikationen"], dff_bar["Jahr"]), axis=-1))
     fig2.update_traces(hovertemplate='%{customdata[1]}<br><b>Publikationen absolut:</b> %{customdata[0]}<extra></extra>')
     fig2.update_xaxes(dtick="1")
@@ -212,7 +220,7 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
                   names="Erscheinungsort",
                   hole=.3,
                   color_discrete_sequence=px.colors.qualitative.Pastel,
-                  )
+                  title="Publikationen nach Orten")
     fig3.update_traces(textinfo='none')
     fig3.update_traces(customdata=np.stack((dff_pie["Erscheinungsort"], dff_pie["Anzahl Publikationen"]), axis=-1))
     fig3.update_traces(hovertemplate='<b>%{customdata[0][0]}</b><br>Anzahl: %{customdata[0][1]}<br>%{percent}')
@@ -223,9 +231,9 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
         dff_animated, lat="lat", lon="lng", hover_name="Erscheinungsort",
         hover_data={"Erscheinungsort": False, "Anzahl Publikationen": False, "Jahr": False, "lat": False,
                     "lng": False},
-        size="Anzahl Publikationen", animation_frame="Jahr", color="Anzahl Publikationen",
+        size="Anzahl Publikationen", animation_frame="Jahr", color="Anzahl Publikationen", range_color=(0,40),
         projection="natural earth", opacity=0.9,
-        title="Karte Erscheinungsorte und Erscheinungsjahre",  color_continuous_scale=px.colors.sequential.Redor
+        title="Karte Erscheinungsorte und Erscheinungsjahre",  color_continuous_scale=px.colors.sequential.Redor_r
     )
     fig4.update_traces(marker_sizemin=4, )
     fig4.layout.coloraxis.colorbar.title = 'Publikationen'
@@ -235,10 +243,10 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
         font_family="sans-serif"
 
     )
-    #fig4.update_traces(customdata=np.stack((dff["Erscheinungsort"], dff["Anzahl Publikationen"]), axis=-1))
-    #fig4.update_traces(hovertemplate = '<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
-    #for f in fig4.frames:
-     #   f.data[0].update(hovertemplate='<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
+    fig4.update_traces(customdata=np.stack((dff["Erscheinungsort"], dff["Anzahl Publikationen"]), axis=-1))
+    fig4.update_traces(hovertemplate = '<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
+    for f in fig4.frames:
+        f.data[0].update(hovertemplate='<b>%{customdata[0]}</b><br>Anzahl Publikationen: %{customdata[1]}<extra></extra>')
 
     dff_tabelle = dff_tabelle.sort_values("Jahr")
     return [fig, fig2, fig3, fig4, dff_tabelle.to_dict("records")]
