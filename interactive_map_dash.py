@@ -5,10 +5,8 @@ import numpy as np
 # Auf dieser Bibliothek basieren die wesentlichen Neuerungen im Vergleich zur letzten Version. Mit Bootstrap haben wir die Seite Responsive gemacht und man kann sie jetzt auch gut auf Handys angucken. Außerdem haben wir auch die Tabs mit Bootstrap umgesetzt
 import dash_bootstrap_components as dbc
 
-app = dash.Dash(__name__)
 # Hier definieren wir unser Bootstrap-Stylesheet, das dann für die gesamte Seite gilt.
-
-app = dash.Dash(external_stylesheets=[dbc.themes.COSMO], meta_tags=[
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.COSMO], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"}
     ])
 app.title = "Karte Humboldt"
