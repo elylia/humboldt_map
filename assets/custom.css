@@ -2,7 +2,10 @@ html *
 {
    font-size: 12px ;
    color: #000 ;
-   font-family: "Open Sans", verdana, arial, sans-serif ;
+     font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+d
 }
 
 h1{
@@ -80,3 +83,47 @@ flex: 1;
     padding-bottom: 30px;}
 
 
+
+
+.dash-spreadsheet-menu {
+    justify-content: flex-end;
+    padding: 1rem 0 ;
+}
+
+.dash-spreadsheet-menu button {
+    font-size: 0;
+}
+
+.dash-spreadsheet-menu button::after {
+content: 'Tabelle exportieren';
+    font-size: 0.8rem;
+    }
+
+
+._dash-loading {
+font-size: 0;
+}
+
+    ._dash-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -30px;
+    margin-left: -30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 5px solid #aae1fb;
+    border-top-color: black;
+    animation: loading 2s linear infinite;
+
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
