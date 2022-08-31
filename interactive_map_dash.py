@@ -2,10 +2,8 @@ import pandas as pd
 import plotly.express as px
 from dash import dcc, html, Input, Output, dash_table, dash
 import numpy as np
-# Auf dieser Bibliothek basieren die wesentlichen Neuerungen im Vergleich zur letzten Version. Mit Bootstrap haben wir die Seite Responsive gemacht und man kann sie jetzt auch gut auf Handys angucken. Außerdem haben wir auch die Tabs mit Bootstrap umgesetzt
 import dash_bootstrap_components as dbc
 
-# Hier definieren wir unser Bootstrap-Stylesheet, das dann für die gesamte Seite gilt.
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.COSMO], meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"}
     ])
@@ -13,7 +11,6 @@ app.title = "Karte Humboldt"
 server = app.server
 
 
-# -- Daten importieren
 df = pd.read_csv("Humbold_Metadaten_lat_lng_ohne_manuell.csv", sep=",")
 df_table = df
 df_table["Link"] = "[" + df_table["Titel"] + "]" + "(https://humboldt.unibe.ch/text/" + df_table["Dateiname"] + ")"
@@ -21,7 +18,6 @@ sprachen = df["Sprache"].sort_values().unique()
 jahre = df["Jahr"].sort_values().unique()
 orte = df["Erscheinungsort"].sort_values().unique()
 
-# -- App Layout
 tab1_content = dbc.Card(
 
     dbc.CardBody([
@@ -120,7 +116,6 @@ app.layout = dbc.Tabs(
     ]
 )
 
-# -- Karte mit Dash verknüpfen
 @app.callback(
     [Output(component_id="world_map", component_property="clickData")],
     [Input(component_id="map-Container", component_property="n_clicks")],
@@ -250,6 +245,5 @@ def update_data(original_figure, sprache, jahr, ort, clickData):
     return [fig, fig2, fig3, fig4, dff_tabelle.to_dict("records")]
 
 
-# -- Und jetzt starten wir unsere App!
 if __name__ == '__main__':
     app.run_server(debug=True)
