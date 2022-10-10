@@ -1,1 +1,1 @@
-# humboldt_map
+# Web-Applikation zur Geovisualisierung der digitalen Humboldt-Edition
